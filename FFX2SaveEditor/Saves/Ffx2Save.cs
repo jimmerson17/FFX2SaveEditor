@@ -519,12 +519,12 @@ namespace FFX2SaveEditor
         {
             foreach (Ability ability in Globals.Abilities.Where(a => a.Character == (byte)PartyMember.All))
             {
-                Abilities.Add(ability);
+                Abilities.Add(new Ability(ability));
             }
 
             foreach (Ability ability in Globals.Abilities.Where(a => a.Character == (byte)member))
             {
-                Abilities.Add(ability);
+                Abilities.Add(new Ability(ability));
             }
         }
     }
@@ -557,6 +557,17 @@ namespace FFX2SaveEditor
             Name = name;
             Ap = 0;
             Type = type;
+        }
+
+        public Ability(Ability ab)
+        {
+            this.Character = ab.Character;
+            this.Dressphere = ab.Dressphere;
+            this.MaxAp = ab.MaxAp;
+            this.Offset = ab.Offset;
+            this.Name = ab.Name;
+            this.Ap = ab.Ap;
+            this.Type = ab.Type;
         }
     }
 }
