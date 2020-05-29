@@ -64,6 +64,7 @@
     <Compile Include="PS3FileSystem\Ps3File.cs" />
     <Compile Include="PS3FileSystem\Ps3SaveManager.cs" />
     <Compile Include="PS3FileSystem\SecureFileInfo.cs" />
+    <Compile Include="Saves\SwitchSave.cs" />
     <Compile Include="ThunderPlains.xaml.cs">
       <DependentUpon>ThunderPlains.xaml</DependentUpon>
     </Compile>

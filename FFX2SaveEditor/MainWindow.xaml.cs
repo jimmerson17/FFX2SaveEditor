@@ -101,9 +101,9 @@ namespace FFX2SaveEditor
             tbxYunaLvl.Text = save.Characters[0].Level.ToString();
             tbxRikkuLvl.Text = save.Characters[1].Level.ToString();
             tbxPaineLvl.Text = save.Characters[2].Level.ToString();
-            lblYunaDress.Content = save.Characters[0].Dressphere > Globals.Dresspheres.Length-1 ? "Invalid" : Globals.Dresspheres[save.Characters[0].Dressphere];
-            lblRikkuDress.Content = save.Characters[1].Dressphere > Globals.Dresspheres.Length - 1 ? "Invalid" : Globals.Dresspheres[save.Characters[1].Dressphere];
-            lblPaineDress.Content = save.Characters[2].Dressphere > Globals.Dresspheres.Length - 1 ? "Invalid" : Globals.Dresspheres[save.Characters[2].Dressphere];
+            lblYunaDress.Content = save.Characters[0].Dressphere > Globals.Dresspheres.Length-1 ? "Invalid" : Globals.Dresspheres[save.Characters[0].Dressphere-1];
+            lblRikkuDress.Content = save.Characters[1].Dressphere > Globals.Dresspheres.Length - 1 ? "Invalid" : Globals.Dresspheres[save.Characters[1].Dressphere-1];
+            lblPaineDress.Content = save.Characters[2].Dressphere > Globals.Dresspheres.Length - 1 ? "Invalid" : Globals.Dresspheres[save.Characters[2].Dressphere-1];
             lblYunaHP.Content = $"{save.Characters[0].HP} / {save.Characters[0].MaxHP}";
             lblRikkuHP.Content = $"{save.Characters[1].HP} / {save.Characters[1].MaxHP}";
             lblPaineHP.Content = $"{save.Characters[2].HP} / {save.Characters[2].MaxHP}";
@@ -2166,7 +2166,7 @@ namespace FFX2SaveEditor
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Multiselect = true;
-            ofd.Filter = "PC saves, Raw files (*.*)|*.*|PS3 Saves (*.PFD,*.SFO,*.*)|*.PFD;*.SFO;*.*";
+            ofd.Filter = "Switch saves, Raw files (*.*)|*.*|PS3 Saves (*.PFD,*.SFO,*.*)|*.PFD;*.SFO;*.*";
             ofd.InitialDirectory = Directory.GetCurrentDirectory();
             if (!(bool)ofd.ShowDialog())
                 return;
@@ -2178,7 +2178,7 @@ namespace FFX2SaveEditor
             }
             else
             {
-                save = new PcSave(ofd.FileName);
+                save = new SwitchSave(ofd.FileName);
                 btnConvertToPC.Visibility = Visibility.Hidden;
             }
 
@@ -2192,11 +2192,11 @@ namespace FFX2SaveEditor
                 MessageBox.Show("You are about to overwrite your save files at\r\n\r\n" + ((Ps3Save)save).Directory + "\r\n\r\nThis is your last chance to back these files up! Hit OK when you are ready to continue.");
                 save.SaveFile("");
             }
-            else if (save is PcSave)
+            else if (save is SwitchSave)
             {
                 SaveFileDialog sfd = new SaveFileDialog();
-                sfd.FileName = ((PcSave)save).OriginalName;
-                sfd.Filter = "PC Save Data|*.*";
+                sfd.FileName = ((SwitchSave)save).OriginalName;
+                sfd.Filter = "Switch Save Data|*.*";
 
                 if (!(bool)sfd.ShowDialog())
                     return;

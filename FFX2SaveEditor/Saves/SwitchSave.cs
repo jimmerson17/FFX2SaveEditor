@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace FFX2SaveEditor.Saves
 {
     /// <summary>
-    /// The raw file format of the PC version.
+    /// The raw file format of the Switch version.
     /// </summary>
     public class SwitchSave : Ffx2Save
     {

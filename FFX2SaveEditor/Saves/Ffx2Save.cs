@@ -17,7 +17,7 @@ namespace FFX2SaveEditor
         private readonly int accOffset = 0x7cc0;
         private readonly int garmOffset = 0x7844;
         private readonly int dressOffset = 0x784d;
-        private readonly int[] abilityOffsets = { 0x8da0, 0x9440, 0x9ae0 };
+        private readonly int[] abilityOffsets = { 0x8da0 + 8, 0x9440 + 8, 0x9ae0 + 8 };
 
         public TimeSpan GameTime { get; set; }
         public int Gil { get; set; }
@@ -112,48 +112,48 @@ namespace FFX2SaveEditor
 
             // New up save object?
 
-            br.BaseStream.Seek(0x10, SeekOrigin.Begin);
+            br.BaseStream.Seek(0x10+8, SeekOrigin.Begin);
             GameTime = TimeSpan.FromSeconds(br.ReadUInt32());
             Gil = br.ReadInt32(); // not real value
 
-            br.BaseStream.Seek(0x2ec, SeekOrigin.Begin);
+            br.BaseStream.Seek(0x2ec + 8, SeekOrigin.Begin);
             OpenAirCredits = br.ReadUInt32();
             ArgentCredits = br.ReadUInt32();
 
-            br.BaseStream.Seek(0x301, SeekOrigin.Begin);
+            br.BaseStream.Seek(0x301 + 8, SeekOrigin.Begin);
             TowerCalibrations = br.ReadBytes(10);
             TowerAttempts = br.ReadBytes(10);
 
-            br.BaseStream.Seek(0x340, SeekOrigin.Begin);
+            br.BaseStream.Seek(0x340 + 8, SeekOrigin.Begin);
             SuccessfulDigs = br.ReadUInt32();
             FailedDigs = br.ReadUInt32();
 
-            br.BaseStream.Seek(0x3b0, SeekOrigin.Begin);
+            br.BaseStream.Seek(0x3b0 + 8, SeekOrigin.Begin);
             GunnerPoints = br.ReadUInt32();
 
-            br.BaseStream.Seek(0x4b4, SeekOrigin.Begin);
+            br.BaseStream.Seek(0x4b4 + 8, SeekOrigin.Begin);
             SlCredits5 = br.ReadUInt32();
 
-            br.BaseStream.Seek(0x4c1, SeekOrigin.Begin);
+            br.BaseStream.Seek(0x4c1 + 8, SeekOrigin.Begin);
             HoverRides = br.ReadUInt32();
 
-            br.BaseStream.Seek(0x4c7, SeekOrigin.Begin);
+            br.BaseStream.Seek(0x4c7 + 8, SeekOrigin.Begin);
             ChocoboSuccesses = br.ReadBytes(5);
 
-            br.BaseStream.Seek(0xc55, SeekOrigin.Begin);
+            br.BaseStream.Seek(0xc55 + 8, SeekOrigin.Begin);
             Faction = br.ReadByte();
 
-            br.BaseStream.Seek(0xd0c, SeekOrigin.Begin);
+            br.BaseStream.Seek(0xd0c + 8, SeekOrigin.Begin);
             PahsanaGreens = br.ReadUInt32();
             MimettGreens = br.ReadUInt32();
             SylkisGreens = br.ReadUInt32();
             GysahlGreens = br.ReadUInt32();
 
-            br.BaseStream.Seek(0xdb8, SeekOrigin.Begin);
+            br.BaseStream.Seek(0xdb8 + 8, SeekOrigin.Begin);
             KimahriSelfEsteemCh2 = br.ReadUInt32();
             KimahriSelfEsteem = br.ReadUInt32();
 
-            br.BaseStream.Seek(0xdc4, SeekOrigin.Begin);
+            br.BaseStream.Seek(0xdc4 + 8, SeekOrigin.Begin);
             // Two bytes each, A/S/Z -> A/D/S
             for (int i = 0; i < 3; i++)
             {
@@ -163,19 +163,19 @@ namespace FFX2SaveEditor
                 }
             }
 
-            br.BaseStream.Seek(0xde4, SeekOrigin.Begin);
+            br.BaseStream.Seek(0xde4 + 8, SeekOrigin.Begin);
             OpenAirPoints = br.ReadUInt32();
             ArgentPoints = br.ReadUInt32();
             MarraigePoints = br.ReadUInt32();
             SlCredits = br.ReadUInt32();
 
-            br.BaseStream.Seek(0x118c, SeekOrigin.Begin);
+            br.BaseStream.Seek(0x118c + 8, SeekOrigin.Begin);
             Chapter = br.ReadByte();
 
-            br.BaseStream.Seek(0x1194, SeekOrigin.Begin);
+            br.BaseStream.Seek(0x1194 + 8, SeekOrigin.Begin);
             OakaDept = br.ReadSingle();
 
-            br.BaseStream.Seek(0x11a6, SeekOrigin.Begin);
+            br.BaseStream.Seek(0x11a6 + 8, SeekOrigin.Begin);
             AlBhedPrimerCount = br.ReadByte();
             AlBhedMaster = br.ReadByte();
 
@@ -216,10 +216,10 @@ namespace FFX2SaveEditor
                 }
             }
 
-            br.BaseStream.Seek(0x7818, SeekOrigin.Begin);
+            br.BaseStream.Seek(0x7818 + 8, SeekOrigin.Begin);
             Gil = br.ReadInt32();
 
-            br.BaseStream.Seek(0x7824, SeekOrigin.Begin);
+            br.BaseStream.Seek(0x7824 + 8, SeekOrigin.Begin);
             Encounters = br.ReadUInt32();
 
             br.BaseStream.Seek(garmOffset, SeekOrigin.Begin);
@@ -303,10 +303,10 @@ namespace FFX2SaveEditor
             08 = XXVI  Z
             */
             #endregion
-            br.BaseStream.Seek(0x8161, SeekOrigin.Begin);
+            br.BaseStream.Seek(0x8161 + 8, SeekOrigin.Begin);
             AlBhedPrimers = br.ReadBytes(4);
 
-            br.BaseStream.Seek(0x8204, SeekOrigin.Begin);
+            br.BaseStream.Seek(0x8204 + 8, SeekOrigin.Begin);
             for (int c = 0; c < 3; c++)
             {
                 Characters[c].Experience = br.ReadUInt32();
@@ -342,7 +342,7 @@ namespace FFX2SaveEditor
 
         public virtual void WriteCharLevel(byte index)
         {
-            bw.BaseStream.Seek(0x8204, SeekOrigin.Begin);
+            bw.BaseStream.Seek(0x8204 + 8, SeekOrigin.Begin);
             bw.Write(Characters[index].Level);
         }
 
@@ -364,10 +364,10 @@ namespace FFX2SaveEditor
         public virtual void WriteGil()
         {
             // Save game info (unused)
-            bw.BaseStream.Seek(0x14, SeekOrigin.Begin);
+            bw.BaseStream.Seek(0x14 + 8, SeekOrigin.Begin);
             bw.Write(Gil);
             // Actual gil value
-            bw.BaseStream.Seek(0x7818, SeekOrigin.Begin);
+            bw.BaseStream.Seek(0x7818 + 8, SeekOrigin.Begin);
             bw.Write(Gil);
         }
 
@@ -480,9 +480,9 @@ namespace FFX2SaveEditor
             bw.Write(crcOffset, 0);
             Crc16_CCITT hasher = new Crc16_CCITT();
             {
-                br.BaseStream.Seek(0x40, SeekOrigin.Begin);
+                br.BaseStream.Seek(0x40 + 8, SeekOrigin.Begin);
                 hasher.ComputeHash(br.ReadBytes(crcOffset + 4 - 0x40));
-                bw.Write(0x1a, (short)hasher.Value);
+                bw.Write(0x1a + 8, (short)hasher.Value);
                 bw.Write(crcOffset, (short)hasher.Value);
             }
         }
@@ -490,7 +490,7 @@ namespace FFX2SaveEditor
         private void CalculateGameComplete()
         {
             int incomplete = StoryFlagBytes.Sum(b => Convert.ToString(b, 2).ToCharArray().Count(c => c == '1'));
-            bw.BaseStream.Seek(0x0C, SeekOrigin.Begin);
+            bw.BaseStream.Seek(0x0C + 8, SeekOrigin.Begin);
             bw.Write((byte)((525 - incomplete) / 5));
         }
     }
