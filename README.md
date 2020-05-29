@@ -3,8 +3,6 @@ Quick and dirty mod of Meth962's work.  Changed to support the Switch.  See his 
 
 A save editor for FFX2 on Switch
 
-This editor will allow you to view and change the pesky story completion flags, among other things. So far, no one has asked this to be updated for the PS2 so I have not even coded it :)
-
 ## How to Use
 * Use Checkpoint to dump your saves, then follow PC directions.
 * For PC, just open any of the "ffx2_###" files.
